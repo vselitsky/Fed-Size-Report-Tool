@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+    <div class="container">
+       <div class="row">
+         <div class="col">
+
+            <h1>Upload csv or xls file</h1>
+            <hr>
+
+            <form action = "http://localhost:5000/federation_by_size_all" method = "POST" enctype = "multipart/form-data">
+
+
+                    
+                    <select name="field">
+                      <option default>Select Field</option>
+                      {% for col in columns %} 
+                          <option value="{{col}}">{{col}}</option>
+                      {% endfor %}    
+                    </select>
+
+                  
+
+                    <button type="submit" class="btn btn-blue-light" style="display:inline-block;">Submit</button>
+
+               </form>
+
+              
+                
+            
+
+          </div>
+        </div>
+      </div>
+
+      
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+ 
+
+      <div class="row">
+         <div class="col-md-12">
+            <div class="search-menu">
+              
+              
+              <form action = "http://localhost:5000/analysis_report" method = "POST" enctype = "multipart/form-data">
+
+              <div id="wrapper"></div>
+              
+              
+             
+                    <h2>GroupBy:</h2>
+
+
+                    <select name="field">
+                      {% for col in columns %} 
+                          <option value="{{col}}">{{col}}</option>
+                      {% endfor %}    
+                    </select>
+
+                    <input type="button" id="more_fields" class="btn btn-blue-light" onclick="add_fields();" value="Add More" />
+                    
+                    
+
+                    <p>count</p>
+
+                    <select name="select2">
+                      {% for col2 in columns %} 
+                          <option value="{{col2}}">{{col2}}</option>
+                      {% endfor %}    
+                    </select>
+
+                    <button type="submit">Calculate</button>
+
+               </form>
+
+            </div>  
+         </div>
+      </div>    
+
+
+      <div class="form-tabs">
+              
+            </div>
+
+            
+
+          <div class="general-form">
+                
+          </div>
+   
+{% endblock content %}

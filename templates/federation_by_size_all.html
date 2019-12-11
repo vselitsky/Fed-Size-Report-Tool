@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+ 
+
+      <div class="row">
+         <div class="col-md-12">
+            <div class="search-menu">
+              <a class="btn export-btn btn-grey download" onclick="window.location.href='{{ url_for('download') }}';" target="_blank">Export Report</a>
+              <a class="btn export-btn btn-grey download" onclick="window.location.href='{{ url_for('analysis') }}';" target="_blank" >Advanced Analysis</a>
+               
+
+
+      <div class="form-tabs">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="tabs">
+                    
+                    <li class="fed_size active"><a href="#">All</a></li>
+
+                    {% for size in fed_sizes %}
+
+                    <li class="fed_size {{size}}"><a href="/federation_by_size/{{size}}">{{size}}</a></li>
+
+                    {% endfor %}
+
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+
+            
+
+          <div class="general-form">
+                <div class="main-table result-table">
+                    <div class="result-table-wrapper">
+                        <div class="sticky-wrap table-sticky">
+
+                            {% for table in tables %}
+                               
+                                {{ table|safe }}
+                            {% endfor %}
+                         
+                        </div>
+                    </div>
+                  </div>
+          </div>
+   
+{% endblock content %}

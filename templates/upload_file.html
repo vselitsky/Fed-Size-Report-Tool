@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+    <div class="container">
+       <div class="row">
+         <div class="col">
+
+            <h1>Upload csv or xls file</h1>
+            <hr>
+
+            <form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+               <input type = "file" name = "file" />
+
+               <input type = "submit" value = "Upload" class = "btn btn-blue-light" style="display:inline-block;"/>
+               <p>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                  <ul class=flashes>
+                  {% for message in messages %}
+                    <li style="color:red;">{{ message }}</li>
+                  {% endfor %}
+                  </ul>
+                  {% endif %}
+                {% endwith %}
+            </p>
+
+                
+              
+            
+                
+            
+               
+
+            </form>
+
+
+            
+
+
+
+          </div>
+        </div>
+      </div>
+
+      
+{% endblock content %}
