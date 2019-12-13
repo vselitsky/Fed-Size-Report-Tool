@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, session, get_template_attribute
+from flask import Flask, render_template, url_for, session
 from forms import LoginForm
 from werkzeug.utils import secure_filename
 from flask import request, redirect
@@ -119,106 +119,74 @@ def uploader():
 
             file.save(path)
 
-            session['path'] = path
+            session['file_path'] = path
             session['filename'] = filename
 
             if not check_csv(filename):
-                df2 = pd.read_excel(path,sheetname="Sheet1",index_col=None)
+                upl_file = pd.read_excel(path,sheetname="Sheet1",index_col=None)
             else:
-                df2 = pd.read_csv(path)
-
-
-            col = list(df2.columns)    
+                upl_file = pd.read_csv(path)
+                
+            upl_file.to_csv(os.path.join(app.config["IMAGE_UPLOADS"], filename), index=False)
+    
+            columns = list(upl_file.columns)    
+            session['file_columns'] = columns
            
             #return send_from_directory('/Users/FOMIOLNY/desktop/flask_test/uploads', filename='xxx.csv', as_attachment=True)
             #return render_template("xx.html",title='ccc', labels=bar_labels, values=bar_values, max=100)
             
 
-            return render_template("upload.html", filename = filename, columns = col)
+            return render_template("upload.html", filename = filename, columns = columns, r=upl_file)
 
 
-
-
-@app.route("/uploader2", methods=["GET", "POST"])
-def uploader2():
-    
-            path = session.get('path')
-
-            filename = session.get('filename')
-
-            feds = pd.read_csv(os.path.join(app.config["IMAGE_UPLOADS"], 'federations.csv'))
-
-
-
-            if not check_csv(filename):
-                df2 = pd.read_excel(path,sheetname="Sheet1",index_col=None)
-            else:
-                df2 = pd.read_csv(path)   
-
-
-            field = request.form.get('field')    
-            
-
-            
-            
-            return render_template('_test.html', field=field)
-            
-            
 
 
 
 @app.route('/federation_by_size/<string:size>', methods=["GET", "POST"])
 def federation_by_size(size):
-    #param=request.args
     
     s = size
     
     session['s'] = s
 
 
-    x = session.get('x')
+    path = session.get('path')
     bar_labels = session.get('bar_labels')
 
-    m = pd.read_csv(x)
+    m = pd.read_csv(path)
     
+    city_size_num = pd.DataFrame(m.groupby('City-Size')['First Name'].count()).reset_index() 
 
     x = m.groupby('City-Size')
     y = x.get_group(size)
-    num=y.shape[0]
+    num = y.shape[0]
 
-    return render_template("federation_by_size.html",tables=[y.to_html(classes='table-sticky sticky-enabled', index=False)], fed_sizes=bar_labels,num=num)
+    return render_template("federation_by_size.html",tables=[y.to_html(classes='table-sticky sticky-enabled', index=False)], fed_sizes=city_size_num, num=num)
 
 
 
 @app.route('/federation_by_size_all', methods=["GET", "POST"])
 def federation_by_size_all():
-    #param=request.args
     
-    path = session.get('path')
-
+    path = session.get('file_path')
     filename = session.get('filename')
+    columns = session.get('file_columns')
 
     feds = pd.read_csv(os.path.join(app.config["IMAGE_UPLOADS"], 'federations.csv'))
+    feds['City-Size'] = feds['City-Size'].replace(['1Large','3Inter','2LrgeInter','5SmallFed'],['Large','Intermidiate','Large Intermidiate','Small'])
+    upl_file = pd.read_csv(path)   
 
 
+    merge_field = request.form.get('field') 
 
-    if not check_csv(filename):
-        df2 = pd.read_excel(path,sheetname="Sheet1",index_col=None)
-    else:
-        df2 = pd.read_csv(path)   
-
-
-    field = request.form.get('field') 
-
-    report = df2.merge(feds, left_on=field, right_on='Community')
-   
-
+    report = upl_file.merge(feds, left_on=merge_field, right_on='Community')
     
-    bar_labels = session.get('bar_labels')
-
+    report.to_csv(path, index=False)
     
+    city_size_num = pd.DataFrame(report.groupby('City-Size')['First Name'].count()).reset_index() 
+    r=pd.read_csv(path)  
 
-    return render_template("federation_by_size_all.html",tables=[report.to_html(classes='table-sticky sticky-enabled',index=False)],fed_sizes=bar_labels)    
+    return render_template("federation_by_size_all.html",tables=[report.to_html(classes='table-sticky sticky-enabled',index=False)], fed_sizes=city_size_num, columns=columns, r=r)    
 
 
 
