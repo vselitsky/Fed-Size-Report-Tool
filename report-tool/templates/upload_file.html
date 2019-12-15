@@ -9,10 +9,20 @@
             <h1>Upload csv or xls file</h1>
             <hr>
 
-            <form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
-               <input type = "file" name = "file" />
 
-               <input type = "submit" value = "Upload" class = "btn btn-blue-light" style="display:inline-block;"/>
+
+            <form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+
+              <label for="file-upload" class="custom-file-upload">
+    <i class="fa fa-cloud-upload"></i> Upload Image
+  </label>
+  <input id="file-upload" name='upload_cont_img' type="file" style="display:none;">
+              
+               
+               <!--<input type = "file" name = "file" style="display:none;"/>
+
+
+               <input type = "submit" value = "Upload" class = "btn btn-blue-light" style="display:inline-block;"/>-->
                <p>
                 {% with messages = get_flashed_messages() %}
                   {% if messages %}
