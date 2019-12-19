@@ -21,7 +21,7 @@ EXPOSE 5000
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "flackblog.py" ]
+CMD [ "app.py" ]
 
 
 

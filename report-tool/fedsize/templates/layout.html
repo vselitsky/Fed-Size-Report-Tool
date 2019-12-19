@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    
+
+    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">-->
+    
+    <link rel="stylesheet" href="https://jfnafedlab.org/assets/css/vendors-crm.min.css?v=201710261156">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.min.css') }}">
+    <script src="https://browser.sentry-cdn.com/4.0.6/bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+   
+
+    <script src="https://fedweb-assets.s3.amazonaws.com/fed-42/1484/jquery.lettering.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="https://jfnafedlab.org/assets/js/vendors.min.js"></script>
+    <script src="https://jfnafedlab.org/assets/js/common.min.js"></script>
+    <script src="https://jfnafedlab.org/assets/js/smooth_scroll.js"></script>
+    <script src="https://jfnafedlab.org/assets/js/roll_up.js"></script>
+    <script src="https://jfnafedlab.org/assets/js/additional_js.js"></script>
+
+  <style>
+  
+  .fed_size a{background: #1d4f90;
+              color:#ffffff!important;}
+
+  .fed_size a:hover{background: #e7ebef;
+                    color:#3d3d3d;}
+                    
+  .result-table {margin-top: 0px;}
+  .form-tabs {margin-bottom: 0px;}
+  .btn.export-btn {width: auto;}
+
+  .search-menu .download{display:inline-block;
+                         margin-bottom:60px;}
+
+  .download:nth-child(1){margin:0 20px 0 0;}
+
+  .search-menu{margin:0 40px;}
+ 
+  select {height:40px;
+          padding: 0px 0 0 10px;
+          display: block;
+          margin: 0 0 20px 0;}
+
+  .form-tabs .tabs li {max-width:20%;}       
+
+  table.dataframe, .dataframe th, .dataframe td {border: 1px solid #ccc!important;}
+
+  th {text-align:left;}
+ 
+  .new-report{float:right;}
+
+  header .logo {font-size: 4rem;}
+
+  header {padding: 4rem 0;}
+
+  .form-control input:not(.checkbox-input):not(.radio-input):not([type=checkbox]):not(.select2-search__field) {
+    min-width: 400px;
+    margin-bottom: 30px;}
+
+  .btn-blue-light {color: #ffffff!important;
+                   background-color: #78a7e1;} 
+
+  .form-control #submit {min-width:auto;} 
+
+  #logout{float: right;
+          color: #ffffff;}
+
+  .go_back{color: #1d4f90!important;}
+
+
+  </style>
+
+  <script>
+
+ $(function(){
+
+    var x='<select name="field">{% for col in columns %}<option value="{{col}}">{{col}}</option>{% endfor %}</select>'
+    var link = window.location.href
+
+    $('#more_fields').click(function() {
+
+      $(x).insertBefore('#more_fields');
+
+    });
+
+
+   $('.sticky-wrap.table-sticky > table > thead').clone().prependTo('.sticky-thead > table');
+    $('#id').prepend(link);
+
+   });
+
+
+
+
+
+$(window).scroll(function() {
+   var hT = $('.sticky-wrap.table-sticky').offset().top,
+       hH = $('sticky-wrap.table-sticky').outerHeight(),
+       wH = $(window).height(),
+       wS = $(this).scrollTop();
+    console.log((hT-wH) , wS);
+  
+ if (wS >= hT){
+
+    $('.sticky-thead').css('position','fixed');
+    
+   }
+  
+});
+
+  </script>
+
+  <style>
+    
+     table.dataframe, .dataframe th, .dataframe td {border: none;}
+
+  </style>
+  
+
+    {% if title %}
+        <title>Flask Blog - {{ title }}</title>
+    {% else %}
+        <title>Flask Blog</title>
+    {% endif %}
+</head>
+<body>
+    <header>
+    <div class="container">
+      <div class="row">
+        
+          <div class="col-12">
+            <!-- Logo -->
+            <div style="text-align: center;"><a class="logo" href="/">Fed Size Report</a>
+                                        {% if current_user.is_authenticated %}
+                                           
+                                           <a id="logout" class="nav-item nav-link" href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i> Logout</a></div>
+
+                                        {% endif %}
+            
+          </div> 
+
+          
+      </div>
+    </div>
+  </header>
+    <div class="body-content">
+         <div class="wrapper">
+          {% block content %}
+
+           <hr>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+          {% endblock %}
+        </div>
+        </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+    
+</body>
+</html>
