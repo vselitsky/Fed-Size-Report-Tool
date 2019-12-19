@@ -17,7 +17,7 @@
    
 
     <script src="https://fedweb-assets.s3.amazonaws.com/fed-42/1484/jquery.lettering.js"></script>
-    <!--<script src="../static/main.js"></script>-->
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
     <script src="https://jfnafedlab.org/assets/js/vendors.min.js"></script>
     <script src="https://jfnafedlab.org/assets/js/common.min.js"></script>
     <script src="https://jfnafedlab.org/assets/js/smooth_scroll.js"></script>
@@ -48,14 +48,13 @@
           display: block;
           margin: 0 0 20px 0;}
 
-  .form-tabs .tabs li {max-width:20%};        
+  .form-tabs .tabs li {max-width:20%;}       
 
-  table.dataframe, .dataframe th, .dataframe td {
-    border: 1px solid #ccc!important;}
+  table.dataframe, .dataframe th, .dataframe td {border: 1px solid #ccc!important;}
 
   th {text-align:left;}
  
- 
+  .new-report{float:right;}
 
   </style>
 
@@ -67,13 +66,12 @@
 
     $('#more_fields').click(function() {
 
-         $(x).insertBefore('#more_fields');
+      $(x).insertBefore('#more_fields');
 
     });
 
+
     
-
-
     
 
    });

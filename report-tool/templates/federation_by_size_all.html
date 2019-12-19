@@ -8,18 +8,24 @@
 
             <div class="search-menu">
 
-              <form action = "http://localhost:5000/analysis_report" method = "POST" enctype = "multipart/form-data">
+              <form method="POST">
+              
+              {{ form.city }}
+              <input type="submit">
+              </form>
+
+              <form action = "http://0.0.0.0:5000/analysis_report" method = "POST" enctype = "multipart/form-data">
 
               <div id="wrapper"></div>
               
-              
+                    
              
                     <select name="field" id="test">
                       {% for col in columns %} 
                           <option value="{{col}}">{{col}}</option>
                       {% endfor %}    
                     </select>
-                    <p id="aaa"></p>
+
                     
 
                     <input type="button" id="more_fields" class="btn btn-blue-light" onclick="add_fields();" value="Add More" />
@@ -71,5 +77,26 @@
                     </div>
                   </div>
           </div>
+
+          <script>
+            
+
+          $(function(){
+
+    
+
+    
+    
+    
+    
+
+
+   
+    
+
+   });
+
+
+          </script>
    
 {% endblock content %}
