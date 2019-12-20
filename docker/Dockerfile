@@ -2,10 +2,23 @@ FROM python:3.7-alpine
 
 USER root
 
-RUN apk update && apk upgrade \
-    && apk add --no-cache --virtual .build-deps gcc build-base linux-headers \
-    ca-certificates python3-dev libffi-dev libressl-dev git \
-    && apk add -U --no-cache libxslt-dev bash
+RUN rm -rf /var/cache/apk/* && \
+    rm -rf /tmp/*
+
+RUN apk update && apk upgrade
+
+RUN apk add --no-cache --virtual .build-deps \
+        gcc \
+        build-base \
+        linux-headers \
+        ca-certificates \
+        python3-dev \
+        libffi-dev \
+        libressl-dev \
+        git
+RUN apk add -U --no-cache \
+	libxslt-dev \
+        bash
 
 
 COPY report-tool/requirements.txt /report-tool/requirements.txt
