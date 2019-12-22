@@ -75,15 +75,55 @@
 
   .go_back{color: #1d4f90!important;}
 
+  .numberCircle {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+
+    background: #fff;
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+
+    font-size: 32px;}
+
 
   </style>
 
+
+
   <script>
+    $( document ).ready(function() {
+  
+
+  var url = window.location.href;
+  document.getElementById("url").innerHTML = url.substring(url.lastIndexOf('/')+1);
+
+
+  });
+
+
+
+    //function myFunction() {
+  //var element = document.getElementById("myDIV");
+  //element.classList.add("mystyle");
+//}
+</script>
+
+
+
+  <script>
+
+
+
+
+  var link = window.location.href
 
  $(function(){
 
     var x='<select name="field">{% for col in columns %}<option value="{{col}}">{{col}}</option>{% endfor %}</select>'
-    var link = window.location.href
+    
 
     $('#more_fields').click(function() {
 
@@ -93,7 +133,7 @@
 
 
    $('.sticky-wrap.table-sticky > table > thead').clone().prependTo('.sticky-thead > table');
-    $('#id').prepend(link);
+    $(link).prependTo('#url');
 
    });
 
