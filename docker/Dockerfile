@@ -21,14 +21,12 @@ RUN apk add -U --no-cache \
         bash
 
 
-COPY report-tool/requirements.txt /report-tool/requirements.txt
+COPY report-tool /report-tool
 
 WORKDIR /report-tool
 
 RUN pip install -U setuptools
 RUN pip install -r /report-tool/requirements.txt
-
-COPY report-tool /report-tool
 
 EXPOSE 5000
 
