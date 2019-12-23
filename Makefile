@@ -13,6 +13,7 @@ deploy_db:
 	-e MYSQL_RANDOM_ROOT_PASSWORD=yes \
     	-e MYSQL_DATABASE=report_db -e MYSQL_USER=mysql \
     	-e MYSQL_PASSWORD=test_pass_15 \
+	-v /db_data:/var/lib/mysql \
     	mysql/mysql-server:5.7
 
 deploy_all:
