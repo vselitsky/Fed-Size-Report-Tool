@@ -21,6 +21,8 @@ app.config['IMAGE_UPLOADS'] = "/Users/olyafomicheva/desktop/fedsize_report/fedsi
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["CSV","XLS","XLSX"]
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 
+db.create_all()
+
 
 
 def allowed_file(filename):
