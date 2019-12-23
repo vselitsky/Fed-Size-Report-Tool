@@ -14,12 +14,13 @@ import os
 
 
 
-UPLOAD_FOLDER = '/path/to/the/uploads'
 
 
-app.config['IMAGE_UPLOADS'] = "/Users/olyafomicheva/desktop/fedsize_report/fedsize/uploads"
+app.config['IMAGE_UPLOADS'] = "/report-tool/fedsize/uploads"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["CSV","XLS","XLSX"]
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
+
+db.create_all()
 
 
 
@@ -68,8 +69,6 @@ def home():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
 
-    users = pd.read_csv(os.path.join(app.config["IMAGE_UPLOADS"], 'users.csv'))
-
     x=bcrypt.generate_password_hash("fedsize").decode('utf-8')
     #x=bcrypt.check_password_hash(up, 'fedsize')
 
@@ -95,6 +94,7 @@ def login():
 @app.route("/uploader", methods=["GET", "POST"])
 def uploader():
     
+
     
     if request.method == "POST":
 
@@ -114,9 +114,12 @@ def uploader():
                
             filename = secure_filename(file.filename)
 
+
+
             path = os.path.join(app.config["IMAGE_UPLOADS"], filename)
 
             file.save(path)
+
 
             session['file_path'] = path
             session['filename'] = filename
@@ -130,12 +133,24 @@ def uploader():
     
             columns = list(upl_file.columns)    
             session['file_columns'] = columns
+
+            
            
             #return send_from_directory('/Users/FOMIOLNY/desktop/flask_test/uploads', filename='xxx.csv', as_attachment=True)
             #return render_template("xx.html",title='ccc', labels=bar_labels, values=bar_values, max=100)
-            
 
-            return render_template("upload.html", filename = filename, columns = columns, r=upl_file)
+        return render_template("upload.html", filename = filename, columns = columns)
+
+    if request.method == "GET":
+
+        filename = session.get('filename')
+        columns = session.get('file_columns')
+
+        return render_template("upload.html", filename = filename, columns = columns)
+    
+    
+
+            
 
 
 
@@ -198,7 +213,7 @@ def federation_by_size_all():
     #form = Form()
     #form.city.choices = [row for index, row in city_size_num.iterrows()]
 
-    return render_template("federation_by_size_all.html",tables=[report.to_html(classes='table-sticky sticky-enabled',index=False)], fed_sizes=city_size_num, columns=columns, r=r)    
+    return render_template("federation_by_size_all.html",tables=[report.to_html(classes='table-sticky sticky-enabled',index=False)], fed_sizes=city_size_num, columns=columns, r=r, filename=filename)    
 
 
 
@@ -293,6 +308,3 @@ def about():
 
 
 
-if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=False)
