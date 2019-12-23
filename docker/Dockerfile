@@ -26,6 +26,7 @@ COPY report-tool /report-tool
 WORKDIR /report-tool
 
 RUN pip install -U setuptools
+RUN pip install pymysql
 RUN pip install -r /report-tool/requirements.txt
 
 EXPOSE 5000
