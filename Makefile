@@ -14,3 +14,18 @@ deploy_db:
     	-e MYSQL_DATABASE=report_db -e MYSQL_USER=mysql \
     	-e MYSQL_PASSWORD=off110650 \
     	mysql/mysql-server:5.7
+
+deploy_all:
+	make build
+	make deploy_db
+	make deploy
+
+destroy_all:
+	docker rm -f report-tool
+	docker rm -f mysql
+	docker rmi report-tool:latest
+
+destroy:
+	docker rm -f report-tool
+	docker rm -f mysql
+
