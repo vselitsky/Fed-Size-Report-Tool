@@ -12,6 +12,7 @@ RUN apk add --no-cache --virtual .build-deps \
         build-base \
         linux-headers \
         ca-certificates \
+	mariadb-dev \
         python3-dev \
         libffi-dev \
         libressl-dev \
@@ -26,7 +27,7 @@ COPY report-tool /report-tool
 WORKDIR /report-tool
 
 RUN pip install -U setuptools
-RUN pip install pymysql
+RUN pip install pymysql mysqlclient
 RUN pip install -r /report-tool/requirements.txt
 
 EXPOSE 5000

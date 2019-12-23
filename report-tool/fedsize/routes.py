@@ -14,10 +14,9 @@ import os
 
 
 
-UPLOAD_FOLDER = '/path/to/the/uploads'
 
 
-app.config['IMAGE_UPLOADS'] = "/Users/olyafomicheva/desktop/fedsize_report/fedsize/uploads"
+app.config['IMAGE_UPLOADS'] = "/report-tool/fedsize/uploads"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["CSV","XLS","XLSX"]
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 
@@ -69,8 +68,6 @@ def home():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-
-    users = pd.read_csv(os.path.join(app.config["IMAGE_UPLOADS"], 'users.csv'))
 
     x=bcrypt.generate_password_hash("fedsize").decode('utf-8')
     #x=bcrypt.check_password_hash(up, 'fedsize')
@@ -311,6 +308,3 @@ def about():
 
 
 
-if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=False)
