@@ -19,7 +19,7 @@ import time
 UPLOAD_FOLDER = '/path/to/the/uploads'
 
 
-app.config['IMAGE_UPLOADS'] = "/Users/olyafomicheva/desktop/fedsize_report/fedsize/uploads"
+app.config['IMAGE_UPLOADS'] = "/report-tool/fedsize/uploads"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["CSV","XLS","XLSX"]
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 
