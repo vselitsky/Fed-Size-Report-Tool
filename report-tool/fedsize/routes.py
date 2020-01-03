@@ -10,10 +10,13 @@ from fedsize.forms import RegistrationForm, LoginForm
 from fedsize.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
+
 import os
+import time
 
 
 
+UPLOAD_FOLDER = '/path/to/the/uploads'
 
 
 app.config['IMAGE_UPLOADS'] = "/report-tool/fedsize/uploads"
@@ -21,8 +24,6 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["CSV","XLS","XLSX"]
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 
 db.create_all()
-
-
 
 def allowed_file(filename):
 
@@ -198,7 +199,8 @@ def federation_by_size_all():
 
         merge_field = request.form.get('field') 
 
-        report = upl_file.merge(feds, left_on=merge_field, right_on='Community')
+        report = upl_file.merge(feds, left_on=merge_field, right_on='Community', how='outer')
+        report['City-Size'].fillna('None',inplace=True)
 
         cols = list(report)
 
@@ -327,6 +329,17 @@ def about():
 
 
 
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash('An email has been sent with instructions to reset your password.', 'info')
+        return redirect(url_for('login'))
+    return render_template('reset_request.html', title='Reset Password', form=form)
 
 
 

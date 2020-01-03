@@ -100,7 +100,7 @@
                     margin-top: 10px;
                     margin-bottom: 5px;}
 
-  .progress_bar {width: 90%;
+  .progress_bar {width: 95%;
                  margin: 0 auto;}
 
   .sticky-thead tbody {opacity:0;}
@@ -129,21 +129,27 @@
   .container {width: 95%;
               margin: 0 auto;}
 
+  table tr { display: none; }
+  table tr.active { display: table-row; }
 
-  
+  .load_more {display: table-cell;
+              margin-top:20px;}
 
+  table{margin-bottom:20px;}
+
+ .sticky-thead > table{border: none!important;}
 
   </style>
 
 
 
   <script>
-    $( document ).ready(function() {
-  
+
+
+  $( document ).ready(function() {
 
   var url = window.location.href;
   //document.getElementById("url").innerHTML = url.substring(url.lastIndexOf('/')+1);
-
 
   });
 
@@ -170,18 +176,40 @@ $(function(){
 
   var link = window.location.href
 
+  var i;
+          
+
  $(function(){
 
     $('div').click(function() {
     var theClass = $(this).attr("class"); // "this" is the element clicked
     $(theClass).prepandTo('.test');
     
+    
   });
+
+   
+   for (i = 0; i < 20; i++) {
+        $('table tr:nth-child('+i+')').addClass('active');
+      }
+    
+
+
+
+    $('a.load_more').on('click', function(e) {
+      e.preventDefault();  
+      var $rows = $('table tr');
+      var lastActiveIndex = $rows.filter('.active:last').index();
+      $rows.filter(':lt(' + (lastActiveIndex + 20) + ')').addClass('active');
+    });
+
+    $('{% if current_user.is_authenticated %}<footer><div class="container"><div class="row"><div class="col-12"><div style="text-align: center;"><form action="/" method="POST" enctype="multipart/form-data" style="margin-top:20px;"><label for="file-upload" class="btn" style="display:table-cell;float:right;"><i class="fa fa-cloud-upload"></i> Add Federations</label><input id="file-upload" name="file" type="file" style="display:none;" onchange="form.submit()"><p></p></form></div></div></div></div></footer>{% endif %}').appendTo('body');
 
     $(link).prependTo('#url');
 
     $('.sticky-wrap.table-sticky > table').clone().prependTo('.sticky-thead');
-    $('.body > header > div > div > div > div > a.logo').clone().prependTo('.sticky-thead');
+    //$('.body > header > div > div > div > div > a.logo').clone().prependTo('.sticky-thead');
+
 
 
     var x='<select name="field">{% for col in columns %}<option value="{{col}}">{{col}}</option>{% endfor %}</select>'
@@ -213,15 +241,20 @@ $(window).scroll(function() {
   
  if (wS >= hT){
 
-    $('.sticky-thead table').css('position','fixed');
-    $('.sticky-thead table').css('top','0');
+     $('.sticky-thead table').css('display','block');
+     $('.sticky-thead table').css('position','fixed');
+     $('.sticky-thead table').css('top','0');
     
    }
 
- else{
-    $('.sticky-thead table').css('position','relative');
 
- }
+ else if (wS < hT){
+
+     $('.sticky-thead table').css('display','none');
+
+   }
+
+
   
 });
 
@@ -283,6 +316,7 @@ $(window).scroll(function() {
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     
+
     
 </body>
 </html>

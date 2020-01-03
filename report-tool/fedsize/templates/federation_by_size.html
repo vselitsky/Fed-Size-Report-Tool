@@ -4,10 +4,12 @@
 
       <div class="row">
          <div class="col-md-12">
-          <p id="url"></p>
+            
+
+
             <div class="search-menu">
 
-              <div class="progress_bar third">
+            <div class="progress_bar third">
               <div class="numberCircle one">1</div>
               <hr class="lineCircle">
               <div class="numberCircle two">2</div>
@@ -31,18 +33,23 @@
             <p>Your new report now contains city sizes.  You can view the full report below in the "All" tab or view the report by city size by clicking on any city size tab. Download the report at any time by clicking on the download button. Please note that you will download a report of your current view. If you want to download the full report, be sure you are in the "All" tab.</p>
             <p>&nbsp;</p>
 
+              
+
               <form action = "/analysis_report" method = "POST" enctype = "multipart/form-data">
 
-              <div id="wrapper"></div>
-
+              <div id="wrapper">
+                
+              </div>
               
-              
+                    
              
-                    <!--<select name="field">
+                    <!--<select name="field" id="test">
                       {% for col in columns %} 
                           <option value="{{col}}">{{col}}</option>
                       {% endfor %}    
                     </select>
+
+                    
 
                     <input type="button" id="more_fields" class="btn btn-blue-light" onclick="add_fields();" value="Add More" />
                     
@@ -55,6 +62,7 @@
               <a class="btn export-btn btn-grey download" onclick="window.location.href='{{ url_for('download') }}';" target="_blank"><i class="fa fa-cloud-download"></i> Export Report</a>
               <!--<a class="btn export-btn btn-grey download" onclick="window.location.href='{{ url_for('analysis') }}';" target="_blank" >Advanced Analysis</a>-->
               <a class="btn new-report btn-grey download" href="/" target="_blank"><i class="fa fa-cloud-upload"></i> New File</a>
+               
 
 
       <div class="form-tabs">
@@ -62,7 +70,7 @@
                 <div class="col-md-12">
                   <ul class="tabs">
                     
-                    <li class="fed_size"><a href="/federation_by_size_all">All</a></li>
+                    <li class="fed_size active"><a href="/federation_by_size_all">All</a></li>
 
                     {% for index, row in fed_sizes.iterrows() %}
 
@@ -87,21 +95,47 @@
                                
                                 {{ table|safe }}
                             {% endfor %}
+
+
                          
                         </div>
 
-
-                        <div class="sticky-wrap table-sticky">
-
+                        <div class="sticky-thead">
                             {% for table in tables %}
                                
                                 {{ table|safe }}
                             {% endfor %}
-                         
+
+
+ 
                         </div>
+
+                        
+                
                         
                     </div>
                   </div>
           </div>
+
+          <script>
+            
+
+          $(function(){
+
+    
+
+    
+    
+    
+    
+
+
+   
+    
+
+   });
+
+
+          </script>
    
 {% endblock content %}
