@@ -75,102 +75,33 @@
 
   .go_back{color: #1d4f90!important;}
 
-  .numberCircle{
+  .numberCircle {
     border-radius: 50%;
     width: 36px;
     height: 36px;
-    padding: 4px;
+    padding: 8px;
 
     background: #fff;
-    border: 2px solid #1d4f90;
+    border: 2px solid #666;
+    color: #666;
     text-align: center;
 
-    font-size: 16px;
-    display:inline-block;
-    font-weight: 600;
-    color:#1d4f90;}
+    font-size: 32px;}
 
-  hr {display:inline-block;
-     width:40%;}
-
-  .go_back {display: block;
-            padding-bottom:30px;}
-
-  .progress_bar hr {border: 0.5px solid #1d4f90;
-                    margin-top: 10px;
-                    margin-bottom: 5px;}
-
-  .progress_bar {width: 95%;
-                 margin: 0 auto;}
-
-  .sticky-thead tbody {opacity:0;}
-
-  .wrapper{padding-top:30px;}
-
-  .one, 
-  .second .two,
-  .third .two,
-  .third .three {background: #1d4f90;
-                color: #fff;}
-
-  .progress_bar_bottom {padding-bottom:30px;}
-
-  .progress_bar_bottom .numberCircle{width:auto;}
-  .progress_bar_bottom hr{width:33%;}
-
-
-  .progress_bar_bottom  .numberCircle{border: none;
-                                       color:#1d4f90;
-                                       border: none;
-                                       background: none;}
-
-  .progress_bar_bottom hr{border:none;}
-
-  .container {width: 95%;
-              margin: 0 auto;}
-
-  table tr { display: none; }
-  table tr.active { display: table-row; }
-
-  .load_more {display: table-cell;
-              margin-top:20px;}
-
-  table{margin-bottom:20px;}
-
- .sticky-thead > table{border: none!important;}
-
- .invalid-feedback span {color:red;}
-
- .form-control input:not(.checkbox-input):not(.radio-input):not([type=checkbox]):not(.select2-search__field) {
-    margin-bottom: 0px;}
-
- .password-section,
- .form-group .btn-blue-light{margin-bottom:30px;}
 
   </style>
 
 
 
   <script>
-
-
-  $( document ).ready(function() {
+    $( document ).ready(function() {
+  
 
   var url = window.location.href;
-  //document.getElementById("url").innerHTML = url.substring(url.lastIndexOf('/')+1);
+  document.getElementById("url").innerHTML = url.substring(url.lastIndexOf('/')+1);
+
 
   });
-
-$(function(){
-
-    $('div').click(function() {
-    var theClass = $(this).attr("class"); // "this" is the element clicked
-    $(theClass).prependTo('.test');
-    
-  });
-
-    });
-
 
 
 
@@ -184,63 +115,12 @@ $(function(){
 
   <script>
 
+
+
+
   var link = window.location.href
 
-  var i;
-
-  function my_func(){
-      $('#add_fed').sumbit();
-  }
-
-  function my_func2(){
-      $('#upl_file').sumbit();
-  }
-          
-
  $(function(){
-
-    $('div').click(function() {
-    var theClass = $(this).attr("class"); // "this" is the element clicked
-    $(theClass).prepandTo('.test');
-    
-    
-  });
-
-    $("#file-upload3").on('change',function() {
-     $("#upl_file").submit();
-});
-
-
-    $("#file-upload2").on('change',function() {
-     $("#add_fed").submit();
-});
-
-   
-   for (i = 0; i < 20; i++) {
-        $('table tr:nth-child('+i+')').addClass('active');
-      }
-    
-
-
-
-    $('a.load_more').on('click', function(e) {
-      e.preventDefault();  
-      var $rows = $('table tr');
-      var lastActiveIndex = $rows.filter('.active:last').index();
-      $rows.filter(':lt(' + (lastActiveIndex + 20) + ')').addClass('active');
-    });
-
-    $('{% if current_user.is_authenticated %}<footer><div class="container"><div class="row"><div class="col-12"><div style="text-align: center;"><form id="add_fed" action="/add_fed_file" method="POST" enctype="multipart/form-data" style="margin-top:20px;"><label for="file-upload2" class="btn" style="display:table-cell;float:right;"><i class="fa fa-cloud-upload"></i> Add Federations</label><input id="file-upload2" name="file" type="file" style="display:none;" ><p></p></form></div></div></div></div></footer>{% endif %}').appendTo('body');
-
-    $(link).prependTo('#url');
-
-
-
-
-    $('.sticky-wrap.table-sticky > table').clone().prependTo('.sticky-thead');
-    //$('.body > header > div > div > div > div > a.logo').clone().prependTo('.sticky-thead');
-
-
 
     var x='<select name="field">{% for col in columns %}<option value="{{col}}">{{col}}</option>{% endfor %}</select>'
     
@@ -250,13 +130,12 @@ $(function(){
       $(x).insertBefore('#more_fields');
 
     });
-  
-    
-});
-    
-    
 
-   
+
+   $('.sticky-wrap.table-sticky > table > thead').clone().prependTo('.sticky-thead > table');
+    $(link).prependTo('#url');
+
+   });
 
 
 
@@ -271,20 +150,9 @@ $(window).scroll(function() {
   
  if (wS >= hT){
 
-     $('.sticky-thead table').css('display','block');
-     $('.sticky-thead table').css('position','fixed');
-     $('.sticky-thead table').css('top','0');
+    $('.sticky-thead').css('position','fixed');
     
    }
-
-
- else if (wS < hT){
-
-     $('.sticky-thead table').css('display','none');
-
-   }
-
-
   
 });
 
@@ -298,9 +166,9 @@ $(window).scroll(function() {
   
 
     {% if title %}
-        <title>{{ title }}</title>
+        <title>Flask Blog - {{ title }}</title>
     {% else %}
-        <title></title>
+        <title>Flask Blog</title>
     {% endif %}
 </head>
 <body>
@@ -313,7 +181,7 @@ $(window).scroll(function() {
             <div style="text-align: center;"><a class="logo" href="/">Fed Size Report</a>
                                         {% if current_user.is_authenticated %}
                                            
-                                           <a id="logout" class="nav-item nav-link" href="{{ url_for('logout') }}">Logout <i class="fa fa-sign-out"></i></a></div>
+                                           <a id="logout" class="nav-item nav-link" href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i> Logout</a></div>
 
                                         {% endif %}
             
@@ -346,7 +214,6 @@ $(window).scroll(function() {
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     
-
     
 </body>
 </html>
