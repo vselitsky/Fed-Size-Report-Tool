@@ -6,7 +6,7 @@ services:
     mysql:
         image: mysql/mysql-server:5.7
         ports:
-            - "3306:3306"
+            - 3306/tcp
         container_name: dbserver
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: "yes"
