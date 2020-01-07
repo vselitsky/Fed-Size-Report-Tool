@@ -1,0 +1,44 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-db
+spec:
+  selector:
+    matchLabels:
+      app: report-tool
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: report-tool
+    spec:
+      containers:
+        - name: report-tool
+          image: mysql/mysql-server:5.7
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: report-tool
+  labels:
+    app: report-tool
+    type: backend
+spec:
+  selector:
+    matchLabels:
+      app: report-tool
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: report-tool
+    spec:
+      containers:
+        - name: report-tool
+          image: vselitsky/report-tool:latest
+

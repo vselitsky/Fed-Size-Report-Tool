@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+
+      
+           <div class="form-tabs">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="tabs">
+
+                    {% for size in fed_sizes %}
+
+                    <li><a href="/federation_by_size/{{size}}">{{size}}</a></li>
+
+                    {% endfor %}
+
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+
+            
+
+          <div class="general-form">
+                <div class="main-table result-table">
+                    <div class="result-table-wrapper">
+                        <div class="sticky-wrap table-sticky">
+
+                            {% for table in tables %}
+                               
+                                {{ table|safe }}
+                            {% endfor %}
+                         
+                        </div>
+                    </div>
+                  </div>
+          </div>
+    
+{% endblock content %}
