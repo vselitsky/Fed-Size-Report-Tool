@@ -1,5 +1,6 @@
 version: '2.3'
 
+
 services:
 
     mysql:
@@ -24,8 +25,6 @@ services:
         restart: always
         container_name: report-tool
         depends_on:
-             - mysql
-        links:
              - mysql
         ports:
              - "80:5000"
