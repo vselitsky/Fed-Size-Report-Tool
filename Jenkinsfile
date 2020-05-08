@@ -8,6 +8,9 @@ pipeline {
                     label 'docker_report-tool'
                 }
             }
+            steps {
+                sh 'docker-compose build'
+            }
         }
     }
 }
