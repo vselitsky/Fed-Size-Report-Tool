@@ -1,13 +1,12 @@
 pipeline {
-    agent none
+    agent {
+        docker {
+            image 'python:3.7-alpine'
+            args '-v /tmp:/tmp'
+        }
+    }
     stages {
         stage('App build') {
-            agent {
-                dockerfile {
-                    dir 'docker'
-                    label 'docker_report-tool'
-                }
-            }
             steps {
                 sh 'docker-compose build'
             }
