@@ -22,6 +22,7 @@ RUN apk add -U --no-cache \
         bash
 
 RUN mkdir /report-tool
+RUN ls -ltrah report-tool
 COPY report-tool /report-tool
 
 WORKDIR /report-tool
