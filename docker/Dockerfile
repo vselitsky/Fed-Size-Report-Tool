@@ -21,8 +21,8 @@ RUN apk add -U --no-cache \
 	libxslt-dev \
         bash
 
-
-COPY ../report-tool /report-tool
+RUN mkdir /report-tool
+COPY report-tool /report-tool
 
 WORKDIR /report-tool
 
