@@ -24,9 +24,9 @@ RUN apk add -U --no-cache \
 RUN pwd
 RUN mkdir /report-tool
 RUN ls -ltra report-tool
-COPY ./report-tool /report-tool
+# COPY ./report-tool /report-tool
 
-WORKDIR /report-tool
+WORKDIR report-tool
 
 RUN pip install --upgrade pip
 RUN pip install -U setuptools
