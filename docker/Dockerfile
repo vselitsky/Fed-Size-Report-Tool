@@ -29,7 +29,7 @@ WORKDIR report-tool
 RUN pip install --upgrade pip
 RUN pip install -U setuptools
 RUN pip install pymysql mysqlclient
-RUN pip install --no-cache-dir -r $WORKDIR/report-tool/requirements.txt
+RUN pip install --no-cache-dir -r ./report-tool/requirements.txt
 
 EXPOSE 5000
 
