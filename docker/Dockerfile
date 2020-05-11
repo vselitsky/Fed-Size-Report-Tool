@@ -22,7 +22,7 @@ RUN apk add -U --no-cache \
         bash
 
 RUN pwd
-COPY report-tool/ /report-tool/
+COPY $WORKSPACE/report-tool/ /report-tool/
 
 WORKDIR /report-tool
 
