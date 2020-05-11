@@ -21,8 +21,9 @@ RUN apk add -U --no-cache \
 	libxslt-dev \
         bash
 
+RUN pwd
 RUN mkdir /report-tool
-RUN ls -ltrah $WORKSPACE/report-tool
+RUN ls -ltra report-tool
 COPY ./report-tool /report-tool
 
 WORKDIR /report-tool
